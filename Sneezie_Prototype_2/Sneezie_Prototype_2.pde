@@ -1,4 +1,5 @@
 ArrayList<ball> esplosions = new ArrayList<ball>();
+ArrayList<sneezie> sneezies = new ArrayList<sneezie>();
 int maxBalls=50;
 boolean firstClick;
 
@@ -7,6 +8,9 @@ void setup() {
   colorMode(HSB, 360, 100, 100, 100);
   background(0, 0, 25, 100);
   firstClick = true;
+  for(int i=0; i<10; i++){
+    sneezies.add(new sneezie());
+  }
 }
 void draw() {
   background(0, 0, 25, 100);
@@ -30,6 +34,11 @@ void draw() {
     if (thisone.dead()) {
       esplosions.remove(i);
     }
+  }
+  for (int i=0; i<sneezies.size(); i++) {
+    sneezie thisone = sneezies.get(i);
+    thisone.display();
+    thisone.floatyo();
   }
 }
 
