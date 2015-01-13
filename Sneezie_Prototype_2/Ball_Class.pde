@@ -1,16 +1,15 @@
 class ball {
   PVector loc, vel, acc;
   float sz, life;
-  int mouseDist;
+  float mouseDist;
 
   ball() {
     sz = random(2, 3);
     loc = new PVector(mouseX, mouseY);
     vel = PVector.random2D();
-    vel.mult(2);
     acc = new PVector(0, 0);
     life = 100.;
-    mouseDist = 50;
+    vel.mult(random(2,3));
   }
 
   void display() {
@@ -25,9 +24,10 @@ class ball {
   }
 
   void stopmoving(PVector mouse_) {
-    if (loc.dist(mouse_)>=mouseDist) {
-      vel=new PVector (0, 0);
+    mouseDist = random(40, 60);
+    if (vel.x < .5 && vel.x > -.5 && vel.y < .5 && vel.y > -.5) {
       acc=new PVector (0, 0);
+      vel=new PVector (0, 0);
     }
   }
 

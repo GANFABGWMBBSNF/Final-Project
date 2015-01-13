@@ -6,21 +6,22 @@ class sneezie {
 
   PVector loc, vel, acc;
   float r;
-  float[] h = new float[12];
+  int[] h = new int[12];
+
 
   sneezie() {
-    r = 10.;
+    r = 30.;
     loc = new PVector(random(r, width-r), random(r, height-r));
     vel = new PVector(random(-1, 1), random(-1, 1));
     acc = new PVector(random(-.01, .01), random(-.01, 01));
     for (int i=0; i<h.length; i++) {
-      h[i] = i*30;
+      //*there was the h thing here  h[i] = (i*30)
     }
   }
 
   void display() {
-    stroke(0);
-    fill(???, 100, 100, 100);
+    noStroke();
+    //  fill(???, 100, 100, 100);
     ellipse(loc.x, loc.y, 2*r, 2*r);
   }
 
@@ -47,6 +48,15 @@ class sneezie {
     //bounce left wall
     if (loc.x-r<0) {
       vel.x=abs(vel.x);
+    }
+  }
+
+  boolean sneezing (ball debris_) {
+    if (loc.dist(debris_.loc) < r){
+      return true;
+    }
+    else {
+      return false;
     }
   }
 }
