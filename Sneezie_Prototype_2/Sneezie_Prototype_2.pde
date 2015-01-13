@@ -39,6 +39,7 @@ void draw() {
     sneezie thisone = sneezies.get(i);
     thisone.display();
     thisone.floatyo();
+    thisone.bounce();
   }
 }
 
