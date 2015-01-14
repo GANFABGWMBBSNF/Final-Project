@@ -3,7 +3,7 @@ ArrayList<sneezie> sneezies = new ArrayList<sneezie>();
 int maxBalls=50;
 boolean firstClick;
 float[] h = new float[12];
-esplosion sneezo = new esplosion();
+
 
 void setup() {
   size(800, 600);
@@ -50,7 +50,7 @@ void draw() {
       }
     }
   }
-  fill(0);
+ fill(#E71AE8);
   text("#PinkprintOniTunes", width-150, height-20);
   
 }
