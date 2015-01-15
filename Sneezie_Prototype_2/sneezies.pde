@@ -1,4 +1,4 @@
-class sneezie {
+ class sneezie {
   // float/move a lil
   // react to the explosion
   // create a new explosion

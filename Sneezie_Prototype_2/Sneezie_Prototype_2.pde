@@ -27,25 +27,27 @@ void draw() {
     }
   }
   for (int i=0; i<esplosions.size (); i++) {
-    ball thisone = esplosions.get(i);
-    thisone.display();
-    thisone.move();
-    thisone.age();
-    thisone.slowmoving(mouse);
-    thisone.stopmoving(mouse);
-    if (thisone.dead()) {
+    ball debris = esplosions.get(i);
+    debris.display();
+    debris.move();
+    debris.age();
+    debris.slowmoving(mouse);
+    debris.stopmoving(mouse);
+    if (debris.dead()) {
       esplosions.remove(i);
     }
   }
   for (int i=0; i<sneezies.size (); i++) {
-    sneezie thisone = sneezies.get(i);
+    sneezie yeezie = sneezies.get(i);
     fill(random(360),99,99,50);
-    thisone.display();
-    thisone.floatyo();
-    thisone.bounce();
+    yeezie.display();
+    yeezie.floatyo();
+    yeezie.bounce();
     for (int k=0; k<esplosions.size (); k++) {
-      ball thisone2 = esplosions.get(k);
-      if (thisone.sneezing(thisone2)) {
+      ball debris2 = esplosions.get(k);
+      if (yeezie.sneezing(debris2)) {
+//        ball debris = esplosions.get(i);
+//        debris.loc(i) = yeezie.loc(i);
         sneezies.remove(i);
       }
     }
