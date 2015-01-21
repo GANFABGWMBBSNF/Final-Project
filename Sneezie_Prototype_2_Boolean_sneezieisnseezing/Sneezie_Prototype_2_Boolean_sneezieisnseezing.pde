@@ -1,17 +1,17 @@
 ArrayList<ball> esplosions = new ArrayList<ball>();
-ArrayList<ball> sneezes = new ArrayList<ball>();
 ArrayList<sneezie> sneezies = new ArrayList<sneezie>();
 int maxBalls=50;
-PVector mousexplosion;
 boolean firstClick;
+boolean sneezieissneezing;
 float[] h = new float[12];
-boolean idfk;
+
 
 void setup() {
   size(800, 600);
   colorMode(HSB, 360, 100, 100, 100);
   background(0, 0, 25, 100);
   firstClick = true;
+  sneezieissneezing=false;
   for (int i=0; i<50; i++) {
     sneezies.add(new sneezie());
   }
@@ -19,16 +19,23 @@ void setup() {
 void draw() {
   background(0, 0, 25, 100);
   PVector mouse=new PVector(mouseX, mouseY);
+
   if (esplosions.size() >= maxBalls) {
     firstClick=false;
   }
 
   if (firstClick) {
     if (mousePressed) {
-      esplosions.add(new  ball());
-      sneezes.add(new ball());
+      esplosions.add(new  ball(mouse));
     }
   }
+  if (sneezieissneezing) {
+    for (int i=0; i<25; i++) {
+      sneezie testsneezie = sneezies.get(0);
+      esplosions.add(new ball(testsneezie.loc));
+    }
+  }
+  sneezieissneezing=false;
   for (int i=0; i<esplosions.size (); i++) {
     ball debris = esplosions.get(i);
     debris.display();
@@ -40,20 +47,6 @@ void draw() {
       esplosions.remove(i);
     }
   }
-  if (idfk) {
-    println("bound");
-    for (int i=0; i < sneezes.size (); i++) {
-      ball debros = sneezes.get(i);
-      debros.display();
-      debros.move();
-      debros.age();
-      debros.slowmoving(mouse);
-      debros.stopmoving(mouse);
-      if (debros.dead()) {
-        sneezes.remove(i);
-      }
-    }
-  }
   for (int i=0; i<sneezies.size (); i++) {
     sneezie yeezie = sneezies.get(i);
     fill(random(360), 99, 99, 50);
@@ -63,19 +56,14 @@ void draw() {
     for (int k=0; k<esplosions.size (); k++) {
       ball debris2 = esplosions.get(k);
       if (yeezie.sneezing(debris2)) {
+        //        ball debris = esplosions.get(i);
+        //        debris.loc(i) = yeezie.loc(i);
         sneezies.remove(i);
+        sneezieissneezing=true;
       }
     }
   }
   fill(#E71AE8);
   text("#PinkprintOniTunes", width-150, height-20);
-}
-void mouseClicked() {
-  mousexplosion = new PVector(mouseX, mouseY);
-  explode(mousexplosion);
-}
-
-void explode(PVector loc_) {
-  idfk=true;
 }
 
