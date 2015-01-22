@@ -7,7 +7,7 @@
   PVector loc, vel, acc;
   float r;
   int[] h = new int[12];
-
+  float trans = 100;
 
   sneezie() {
     r = 30.;
@@ -21,7 +21,7 @@
 
   void display() {
     noStroke();
-    //  fill(???, 100, 100, 100);
+    fill(0, 100, 100, trans);
     ellipse(loc.x, loc.y, 2*r, 2*r);
   }
 

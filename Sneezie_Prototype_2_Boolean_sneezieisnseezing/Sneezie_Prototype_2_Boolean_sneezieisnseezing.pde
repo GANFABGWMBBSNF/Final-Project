@@ -12,7 +12,7 @@ void setup() {
   background(0, 0, 25, 100);
   firstClick = true;
   sneezieissneezing=false;
-  for (int i=0; i<50; i++) {
+  for (int i=0; i<1; i++) {
     sneezies.add(new sneezie());
   }
 }
@@ -56,10 +56,11 @@ void draw() {
     for (int k=0; k<esplosions.size (); k++) {
       ball debris2 = esplosions.get(k);
       if (yeezie.sneezing(debris2)) {
-        //        ball debris = esplosions.get(i);
-        //        debris.loc(i) = yeezie.loc(i);
-        sneezies.remove(i);
+        yeezie.trans=0;
+        println("sab");
         sneezieissneezing=true;
+      //  sneezies.remove(i);
+        
       }
     }
   }
