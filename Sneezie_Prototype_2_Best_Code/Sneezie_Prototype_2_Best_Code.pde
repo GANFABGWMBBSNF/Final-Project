@@ -20,6 +20,7 @@ String timeComment;
 float timePowerChance, burstPowerChance;
 boolean timePowerOn;
 boolean timePowerOff;
+
 void setup() {
   size(800, 600);
   colorMode(HSB, 360, 100, 100, 100);
@@ -39,6 +40,7 @@ void setup() {
   timePowerOn=false;
   timePowerOff=false;
 }
+
 void draw() {
   background(0, 0, 25, 100);
   PVector mouse=new PVector(mouseX, mouseY);
@@ -124,15 +126,17 @@ void draw() {
       timePowerOff=true;
     }
     for (int i=0; i<1; i++) {
-      timeSneezie timezie = timePower.get(i);
-      timezie.display();
-      timezie.floatyo();
-      timezie.bounce();
-      for (int h=0; h<esplosions.size (); h++) {
-        ball debris3 = esplosions.get(h);
-        if (timezie.sneezing(debris3)) {
-          timezie.pop();
-          time+=5;
+      if (timePower.size ()>0) {
+        timeSneezie timezie = timePower.get(i);
+        timezie.display();
+        timezie.floatyo();
+        timezie.bounce();
+        for (int h=0; h<esplosions.size (); h++) {
+          ball debris3 = esplosions.get(h);
+          if (timezie.sneezing(debris3)) {
+            timePower.remove(i);
+            time+=5;
+          }
         }
       }
     }
