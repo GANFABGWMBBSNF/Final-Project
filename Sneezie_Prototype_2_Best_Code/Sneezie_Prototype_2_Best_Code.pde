@@ -78,27 +78,27 @@ void draw() {
 
     if (level==2) {
       maxBalls=100;
-      maxSneezie=20;
+//    maxSneezie=20;
     }//end of lvl 2
-    
+
     if (level==3) {
       maxBalls=100;
-      maxSneezie=20;
+//      maxSneezie=20;
     }//end of lvl 3
-    
+
     if (level==4) {
       maxBalls=100;
-      maxSneezie=20;
+//      maxSneezie=20;
     }//end of lvl 4
-    
+
     if (level==5) {
       maxBalls=100;
-      maxSneezie=20;
+//      maxSneezie=20;
     }//end of lvl 5
-    
+
     if (level==6) {
       maxBalls=100;
-      maxSneezie=20;
+//      maxSneezie=20;
     }//end of lvl 6
 
     if (loading) {
@@ -276,7 +276,7 @@ void draw() {
         bubbles bubbly = winningBubbles.get(i);
         bubbly.show();
         bubbly.bounce();
-        if (bubbly.loc.y<-650) {
+        if (bubbly.loc.y<-20 && bubbly.vel.y<0) {
           winningBubbles.remove(i);
         }
       }
@@ -301,6 +301,9 @@ void keyReleased() {
     for (int i=0; i<burstPower.size (); i++) {
       burstPower.remove(i);
     }
+    for (int i=0; i<esplosions.size (); i++) {
+      esplosions.remove(i);
+    }
     if (key==ENTER) {
       time=10;
       frame=0;
@@ -315,7 +318,11 @@ void keyReleased() {
       loading=true;
       stage=1;
       level+=1;
+      maxSneezie+=5;
       gameScreen=true;
+      for (int i=0; i<winningBubbles.size (); i++) {
+        winningBubbles.remove(i);
+      }
     }
   }
 
