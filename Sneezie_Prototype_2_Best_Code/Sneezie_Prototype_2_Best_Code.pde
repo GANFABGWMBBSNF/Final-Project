@@ -248,7 +248,7 @@ void draw() {
       background(0);
       /////bubblies/////
       if (winningBubbles.size()<maxBubbles) {
-        for (int i=0; i<15; i++) {
+        for (int i=0; i<100; i++) {
           winningBubbles.add(new bubbles());
         }
       }
@@ -256,6 +256,9 @@ void draw() {
         bubbles bubbly = winningBubbles.get(i);
         bubbly.show();
         bubbly.bounce();
+        if (bubbly.loc.y<-650) {
+          winningBubbles.remove(i);
+        }
       }
       /////text-to-advance/////
       fill(#120DBC);

@@ -1,12 +1,12 @@
 class bubbles {
   PVector loc, vel;
-  float r= 50;
+  float r= 10;
   float h;
 
   bubbles() {
-    r = 50;
-    loc = new PVector (random(r,width-r),random(-200,-r));
-    vel = new PVector(random(-2, 2), random(2.75,3.25));
+    r = 10;
+    loc = new PVector (random(r,width-r),random(-600,-r));
+    vel = new PVector(random(-2, 2), random(3.75,4.25));
  // vel.mult(random(2,3));
     h = random(360);
   }
