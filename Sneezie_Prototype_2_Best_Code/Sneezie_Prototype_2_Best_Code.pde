@@ -2,6 +2,7 @@ ArrayList<ball> esplosions = new ArrayList<ball>();
 ArrayList<sneezie> sneezies = new ArrayList<sneezie>();
 // PVector testtimeloc = new PVector(width/3, 2*height/3);
 ArrayList<timeSneezie> timePower = new ArrayList<timeSneezie>();
+ArrayList<burstSneezie> burstPower = new ArrayList<burstSneezie>();
 int maxBalls=50;
 int maxSneezie;
 boolean firstClick;
@@ -18,8 +19,11 @@ float sneezieColor;
 float sneezieColorC;
 String timeComment;
 float timePowerChance, burstPowerChance;
-boolean timePowerOn;
-boolean timePowerOff;
+boolean timePowerOn, timePowerOff;
+boolean burstPowerOn, burstPowerOff;
+boolean burst;
+int timeFinal;
+boolean plusTime;
 
 void setup() {
   size(800, 600);
@@ -36,9 +40,14 @@ void setup() {
   frame=0;
   levelTextColor=0;
   sneezieColorC=.5;
-  timePowerChance=0;
+  timePowerChance=random(100);
   timePowerOn=false;
   timePowerOff=false;
+  burstPowerChance=random(100);
+  burstPowerOn=false;
+  burstPowerOff=false;
+  timeFinal=0;
+  plusTime=false;
 }
 
 void draw() {
@@ -75,16 +84,22 @@ void draw() {
         loading=false;
       }
     }
-
-    if (esplosions.size() >= maxBalls) {
-      firstClick=false;
-    }
-
-    if (firstClick) {
+    //////////////////////////////////////
+    if (esplosions.size() < maxBalls) {
       if (mousePressed) {
         esplosions.add(new  ball());
       }
     }
+    //////////////////////////////////////
+    if (burst) {
+      for (int k=0; k<3; k++) {
+        for (int i=0; i<50; i++) {
+          esplosions.add(new ball());
+        }
+      }
+      burst=false;
+    }
+    //////////////////////////////////////
     for (int i=0; i<esplosions.size (); i++) {
       ball debris = esplosions.get(i);
       debris.display();
@@ -109,10 +124,15 @@ void draw() {
       for (int k=0; k<esplosions.size (); k++) {
         ball debris2 = esplosions.get(k);
         if (yeezie.sneezing(debris2)) {
-          sneezies.remove(i);
+          if (sneezies.size()>0) {
+            if (i!=sneezies.size()) {
+              sneezies.remove(i);
+            }
+          }
         }
       }
     }
+    /////////time power up/////////
     if (timePowerOff!=true) {
       if (timePowerChance<25) {
         timePowerOn=true;
@@ -136,11 +156,47 @@ void draw() {
           if (timezie.sneezing(debris3)) {
             timePower.remove(i);
             time+=5;
+            plusTime=true;
+            println("working");
           }
         }
       }
     }
-
+    if (plusTime) {
+      for (int i=0; i<301; i++) {
+        text("+5s", mouseX, mouseY);   ////work in progress
+      }
+      plusTime=false;
+    }
+    /////////burst power up/////////
+    if (burstPowerOff!=true) {
+      if (burstPowerChance<25) {
+        burstPowerOn=true;
+      }
+    }
+    if (burstPowerOn) {
+      for (int i=0; i<1; i++) {
+        burstPower.add(new burstSneezie());
+      }      
+      burstPowerOn=false;
+      burstPowerOff=true;
+    }
+    for (int i=0; i<1; i++) {
+      if (burstPower.size ()>0) {
+        burstSneezie burstzie = burstPower.get(i);
+        burstzie.display();
+        burstzie.floatyo();
+        burstzie.bounce();
+        for (int h=0; h<esplosions.size (); h++) {
+          ball debris3 = esplosions.get(h);
+          if (burstzie.sneezing(debris3)) {
+            burstPower.remove(i);
+            burst=true;
+          }
+        }
+      }
+    }
+    //////////////////////////////////////
     fill(#E71AE8);
     textSize(12);
     text("#PinkprintOniTunes", width-75, height-20);
@@ -170,13 +226,13 @@ void draw() {
     text(timeComment, 25, 60);
     textAlign(CENTER);
 
-    if (sneezies.size()==0 && timePower.size()==0 || time<=0) {
+    if (sneezies.size()==0 && timePower.size()==0 && burstPower.size()==0 || time<=0) {
       gameScreen=false;
     }
   }//end of stage 1(gameScreen==true)
 
   else {
-    if (sneezies.size()>0 || timePower.size()>0) {
+    if (sneezies.size()>0 || timePower.size()>0 || burstPower.size()>0) {
       background(0);
       fill(#120DBC);
       textSize(50);
@@ -193,7 +249,16 @@ void draw() {
 }//end of main code
 
 void keyReleased() {
-  if (gameScreen==false && sneezies.size() <= 0 && timePower.size()<=0) {
+  if (gameScreen==false && sneezies.size() <= 0 && timePower.size()<=0 && burstPower.size()<=0) {
+    for (int i=0; i<sneezies.size (); i++) {
+      sneezies.remove(i);
+    }
+    for (int i=0; i<timePower.size (); i++) {
+      timePower.remove(i);
+    }
+    for (int i=0; i<burstPower.size (); i++) {
+      burstPower.remove(i);
+    }
     if (key==ENTER) {
       time=10;
       frame=0;
@@ -202,12 +267,19 @@ void keyReleased() {
       timePowerChance=(random(100));
       timePowerOn=false;
       timePowerOff=false;
+      burstPowerChance=(random(100));
+      burstPowerOn=false;
+      burstPowerOff=false;
       loading=true;
       stage=1;
       level+=1;
       gameScreen=true;
     }
   }
+  
+  
+  
+  
   ///////DEVELOPER CHEATS//////// 
   else {
     if (key > '0' && key < '7') {
