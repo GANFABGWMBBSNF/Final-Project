@@ -14,6 +14,7 @@ int frame;
 int levelTextColor;
 float sneezieColor;
 float sneezieColorC;
+String timeComment;
 
 void setup() {
   size(800, 600);
@@ -41,6 +42,7 @@ void draw() {
   println(level);
   print("gameScreen Value: ");
   println(gameScreen);
+  println("sneezieColor Value: " + sneezieColor);
   println("--------------------");
 
   if (gameScreen) {
@@ -110,6 +112,23 @@ void draw() {
     text("Time Left: ", 75, 30);
     text(/*"Time Left: " + */(time-frame*.0167), 150, 30);
 
+    textAlign(LEFT);
+    textSize(15);
+    if (time-frame*.0167 > 5) {
+      fill(100, 100, 100, 100);
+      timeComment="GO! GO! GO!";
+    }
+    if (time-frame*.0167 <= 5 && time-frame*.0167 > 2.5) {
+      fill(50, 100, 100, 100);
+      timeComment="Speed It Up!";
+    }
+    if (time-frame*.0167 <= 2.5 && time-frame*.0167 >0) {
+      fill(0, 100, 100, 100);
+      timeComment="Final Stretch!";
+    }
+    text(timeComment, 25, 60);
+    textAlign(CENTER);
+
     if (time-frame*.0167<=0 || sneezies.size()==0) {
       gameScreen=false;
     }
@@ -138,10 +157,88 @@ void keyReleased() {
       time=10;
       frame=0;
       sneezieColor=level*60;
+      sneezieColorC=abs(sneezieColorC);
       loading=true;
       stage=1;
       level+=1;
       gameScreen=true;
+    }
+  }
+  ///////DEVELOPER CHEATS//////// 
+  else {
+    if (key > '0' && key < '7') {
+      for (int i=0; i<sneezies.size(); i++) {
+        sneezies.remove(i);
+      }
+      if (key=='1') {
+        time=10;
+        frame=0;
+        sneezieColor=level*60;
+        sneezieColorC=abs(sneezieColorC);
+        loading=true;
+        stage=1;
+        level=1;
+        gameScreen=true;
+      }
+      if (key=='2') {
+        time=10;
+        frame=0;
+        sneezieColor=level*60;
+        sneezieColorC=abs(sneezieColorC);
+        loading=true;
+        stage=1;
+        level=2;
+        gameScreen=true;
+      }
+      if (key=='3') {
+        time=10;
+        frame=0;
+        sneezieColor=level*60;
+        sneezieColorC=abs(sneezieColorC);
+        loading=true;
+        stage=1;
+        level=3;
+        gameScreen=true;
+      }
+      if (key=='4') {
+        time=10;
+        frame=0;
+        sneezieColor=level*60;
+        sneezieColorC=abs(sneezieColorC);
+        loading=true;
+        stage=1;
+        level=4;
+        gameScreen=true;
+      }
+      if (key=='5') {
+        time=10;
+        frame=0;
+        sneezieColor=level*60;
+        sneezieColorC=abs(sneezieColorC);
+        loading=true;
+        stage=1;
+        level=5;
+        gameScreen=true;
+      }
+      if (key=='6') {
+        time=10;
+        frame=0;
+        sneezieColor=level*60;
+        sneezieColorC=abs(sneezieColorC);
+        loading=true;
+        stage=1;
+        level=6;
+        gameScreen=true;
+      }
+      if (key==' ') {
+        time=10;
+        frame=0;
+        sneezieColor=level*60;
+        sneezieColorC=abs(sneezieColorC);
+        loading=true;
+        stage=1;
+        gameScreen=true;
+      }
     }
   }
 }
