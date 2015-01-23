@@ -119,22 +119,22 @@ void draw() {
     if (timePowerOn) {
       for (int i=0; i<1; i++) {
         timePower.add(new timeSneezie());
-      }      
-      timePowerOn=false;
-      timePowerOff=true;
-    }
-    for (int i=0; i<1; i++) {
-      timeSneezie timezie = timePower.get(i);
-      timezie.display();
-      timezie.floatyo();
-      timezie.bounce();
-      for (int h=0; h<esplosions.size (); h++) {
-        ball debris3 = esplosions.get(h);
-        if (timezie.sneezing(debris3)) {
-          timezie.pop();
-          time+=5;
+      }
+      for (int i=0; i<1; i++) {
+        timeSneezie timezie = timePower.get(i);
+        timezie.display();
+        timezie.floatyo();
+        timezie.bounce();
+        for (int h=0; h<esplosions.size (); h++) {
+          ball debris3 = esplosions.get(h);
+          if (timezie.sneezing(debris3)) {
+            timePower.remove(i);
+            time+=5;
+          }
         }
       }
+      timePowerOn=false;
+        timePowerOff=true;
     }
 
     fill(#E71AE8);
