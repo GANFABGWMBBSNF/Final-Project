@@ -1,7 +1,7 @@
 class sneezie {
   PVector loc, vel, acc;
   float r;
-  int[] h = new int[12];
+//int[] h = new int[12];
 
 
   sneezie() {

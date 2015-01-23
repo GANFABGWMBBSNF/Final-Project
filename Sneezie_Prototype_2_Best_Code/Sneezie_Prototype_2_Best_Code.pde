@@ -3,6 +3,7 @@ ArrayList<sneezie> sneezies = new ArrayList<sneezie>();
 // PVector testtimeloc = new PVector(width/3, 2*height/3);
 ArrayList<timeSneezie> timePower = new ArrayList<timeSneezie>();
 ArrayList<burstSneezie> burstPower = new ArrayList<burstSneezie>();
+ArrayList<bubbles> winningBubbles= new ArrayList<bubbles>();
 int maxBalls=50;
 int maxSneezie;
 boolean firstClick;
@@ -24,6 +25,7 @@ boolean burstPowerOn, burstPowerOff;
 boolean burst;
 int timeFinal;
 boolean plusTime;
+int maxBubbles;
 
 void setup() {
   size(800, 600);
@@ -48,6 +50,7 @@ void setup() {
   burstPowerOff=false;
   timeFinal=0;
   plusTime=false;
+  maxBubbles=5;
 }
 
 void draw() {
@@ -92,7 +95,7 @@ void draw() {
     }
     //////////////////////////////////////
     if (burst) {
-      for (int k=0; k<3; k++) {
+      for (int k=0; k<5; k++) {
         for (int i=0; i<50; i++) {
           esplosions.add(new ball());
         }
@@ -154,10 +157,12 @@ void draw() {
         for (int h=0; h<esplosions.size (); h++) {
           ball debris3 = esplosions.get(h);
           if (timezie.sneezing(debris3)) {
-            timePower.remove(i);
-            time+=5;
-            plusTime=true;
-            println("working");
+            if (i!=timePower.size()) {
+              timePower.remove(i);
+              time+=5;
+              plusTime=true;
+              println("working");
+            }
           }
         }
       }
@@ -190,8 +195,10 @@ void draw() {
         for (int h=0; h<esplosions.size (); h++) {
           ball debris3 = esplosions.get(h);
           if (burstzie.sneezing(debris3)) {
-            burstPower.remove(i);
-            burst=true;
+            if (i!=burstPower.size()) {
+              burstPower.remove(i);
+              burst=true;
+            }
           }
         }
       }
@@ -206,7 +213,7 @@ void draw() {
     text("Level: " + level, width-75, 30);
 
     text("Time Left: ", 75, 30);
-    text(/*"Time Left: " + */(time), 150, 30);
+    text(/*"Time Left: " + */time, 155, 30);
 
     textAlign(LEFT);
     textSize(15);
@@ -239,6 +246,18 @@ void draw() {
       text("GAME OVER", width/2, height/2);
     } else {
       background(0);
+      /////bubblies/////
+      if (winningBubbles.size()<maxBubbles) {
+        for (int i=0; i<15; i++) {
+          winningBubbles.add(new bubbles());
+        }
+      }
+      for (int i=0; i<winningBubbles.size (); i++) {
+        bubbles bubbly = winningBubbles.get(i);
+        bubbly.show();
+        bubbly.bounce();
+      }
+      /////text-to-advance/////
       fill(#120DBC);
       textSize(50);
       text("YOU WON!!!", width/2, height/2);
@@ -276,10 +295,10 @@ void keyReleased() {
       gameScreen=true;
     }
   }
-  
-  
-  
-  
+
+
+
+
   ///////DEVELOPER CHEATS//////// 
   else {
     if (key > '0' && key < '7') {
