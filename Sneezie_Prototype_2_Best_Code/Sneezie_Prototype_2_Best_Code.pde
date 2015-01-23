@@ -80,6 +80,26 @@ void draw() {
       maxBalls=100;
       maxSneezie=20;
     }//end of lvl 2
+    
+    if (level==3) {
+      maxBalls=100;
+      maxSneezie=20;
+    }//end of lvl 3
+    
+    if (level==4) {
+      maxBalls=100;
+      maxSneezie=20;
+    }//end of lvl 4
+    
+    if (level==5) {
+      maxBalls=100;
+      maxSneezie=20;
+    }//end of lvl 5
+    
+    if (level==6) {
+      maxBalls=100;
+      maxSneezie=20;
+    }//end of lvl 6
 
     if (loading) {
       for (int i=0; i<maxSneezie; i++) {
