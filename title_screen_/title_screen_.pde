@@ -1,4 +1,5 @@
-ArrayList<bubbles> bubble = new ArrayList<bubbles>();
+  ArrayList<bubbles> bubble = new ArrayList<bubbles>();
+  bubbles text = new bubbles();
 float sz = 30;
 float r = 30;
 PVector loc = new PVector (random(width-r), random(150, 550));
@@ -23,23 +24,12 @@ void draw() {
   for (int i=0; i<300; i++) {
     bubble.add(new bubbles());
     bubbles boop = bubble.get(i);
-    boop.show();
+    boop.showBalls();
     boop.bounce();
   }
+    text.showText();
+ 
 
-  fill(0, 0, 25, 100);
-  rect(0, 0, width, 200);
-  rect(0, 400, width, height);
-  
-  fill(frameCount%360,100,100,100);
-  textSize(195);
-  text("SNEEZIES",width/2,375);
-  fill(0,0,25,100);
-  textSize(190);
-  text("SNEEZIES",width/2,375);
-  noStroke();
-  fill(frameCount%360,100,100,100);
-  textSize(50);
-  text("GOTTA CLICK EM ALL!",width/2,500);
+
 }
 
