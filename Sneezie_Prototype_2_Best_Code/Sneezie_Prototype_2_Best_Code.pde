@@ -26,14 +26,16 @@ boolean burst;
 int timeFinal;
 boolean plusTime;
 int maxBubbles;
+boolean displaytime;
 
 void setup() {
   size(800, 600);
   colorMode(HSB, 360, 100, 100, 100);
   background(0, 0, 25, 100);
+ // frameRate(30);
+
   firstClick = true;
   loading=true;
-
   time=10;
   textAlign(CENTER);
   level=1;
@@ -78,27 +80,27 @@ void draw() {
 
     if (level==2) {
       maxBalls=100;
-//    maxSneezie=20;
+      //    maxSneezie=20;
     }//end of lvl 2
 
     if (level==3) {
       maxBalls=100;
-//      maxSneezie=20;
+      //      maxSneezie=20;
     }//end of lvl 3
 
     if (level==4) {
       maxBalls=100;
-//      maxSneezie=20;
+      //      maxSneezie=20;
     }//end of lvl 4
 
     if (level==5) {
       maxBalls=100;
-//      maxSneezie=20;
+      //      maxSneezie=20;
     }//end of lvl 5
 
     if (level==6) {
       maxBalls=100;
-//      maxSneezie=20;
+      //      maxSneezie=20;
     }//end of lvl 6
 
     if (loading) {
@@ -187,12 +189,17 @@ void draw() {
         }
       }
     }
-    if (plusTime) {
-      for (int i=0; i<301; i++) {
-        text("+5s", mouseX, mouseY);   ////work in progress
+    for (int i=0; i<301; i++) {                //WIP
+      if (plusTime) {
+        displaytime=true;
       }
       plusTime=false;
     }
+    if (displaytime) {
+      text("+5s", mouseX, mouseY);
+    }
+    
+    
     /////////burst power up/////////
     if (burstPowerOff!=true) {
       if (burstPowerChance<25) {
