@@ -1,5 +1,5 @@
-  ArrayList<bubbles> bubble = new ArrayList<bubbles>();
-  bubbles text = new bubbles();
+  ArrayList<title> bubble = new ArrayList<title>();
+  title text = new title();
 float sz = 30;
 float r = 30;
 PVector loc = new PVector (random(width-r), random(150, 550));
@@ -21,9 +21,9 @@ void draw() {
   background(0, 0, 25, 100);
   fill(309,100,100,100);
   noStroke();
-  for (int i=0; i<300; i++) {
-    bubble.add(new bubbles());
-    bubbles boop = bubble.get(i);
+  for (int i=0; i<350; i++) {
+    bubble.add(new title());
+    title boop = bubble.get(i);
     boop.showBalls();
     boop.bounce();
   }

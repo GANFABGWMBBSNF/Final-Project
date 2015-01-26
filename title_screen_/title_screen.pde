@@ -1,19 +1,24 @@
-class bubbles {
+class title {
   PVector loc, vel;
   float r= 50;
+  boolean firstFall;
 
-  bubbles() {
+  title() {
     r = 50;
-    loc = new PVector (random(width-r), random(150, 550));
+    loc = new PVector (random(width-r), random(75, 150));
     vel = PVector.random2D();
     vel.mult(random(2, 3));
     h = random(360);
+    firstFall = true;
   }
 
   void showBalls() {
     fill(h, 99, 99, 50);
     ellipse(loc.x, loc.y, r, r);
     loc.add(vel);
+    if (loc.y>200) {
+      firstFall = false;
+    }
   }
 
   void showText() {
@@ -33,9 +38,10 @@ class bubbles {
     if (loc.x<r || loc.x>width) { 
       vel.x*=-1;
     }
-    if (loc.y<150 || loc.y>550) {
+    if ((loc.y<200 || loc.y>400) && firstFall == false) {
       vel.y*=-1;
     }
+    println(firstFall);
   }
 }
 
