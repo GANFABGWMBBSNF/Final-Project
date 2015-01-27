@@ -25,11 +25,14 @@ void setup() {
   colorMode(HSB, 360, 100, 100, 100);
   background(0, 0, 25, 100);
 <<<<<<< HEAD
+<<<<<<< HEAD
   // frameRate(30);
 
   firstClick = true;
   loading=true;
   time=10;
+=======
+>>>>>>> origin/master
 =======
 >>>>>>> origin/master
   textAlign(CENTER);
