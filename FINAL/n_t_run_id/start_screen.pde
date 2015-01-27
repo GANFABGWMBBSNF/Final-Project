@@ -2,6 +2,7 @@ class title {
   PVector loc, vel;
   float r= 50;
   boolean firstFall;
+  float h;
 
   title() {
     r = 50;
@@ -13,6 +14,7 @@ class title {
   }
 
   void showBalls() {
+    noStroke();
     fill(h, 99, 99, 50);
     ellipse(loc.x, loc.y, r, r);
     loc.add(vel);
@@ -46,7 +48,6 @@ class title {
     if ((loc.y<200 || loc.y>400) && firstFall == false) {
       vel.y*=-1;
     }
-    println(firstFall);
   }
 }
 
