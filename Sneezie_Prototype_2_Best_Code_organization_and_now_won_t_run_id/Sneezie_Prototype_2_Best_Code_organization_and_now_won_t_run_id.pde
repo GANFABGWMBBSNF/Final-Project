@@ -5,6 +5,7 @@ ArrayList<burstSneezie> burstPower = new ArrayList<burstSneezie>();
 ArrayList<bubbles> winningBubbles= new ArrayList<bubbles>();
 ArrayList<title> introBubbles = new ArrayList<title>();
 title titleText = new title();
+instructions instr = new instructions();
 
 boolean firstClick=true;
 boolean loading=true, burst;
@@ -39,18 +40,11 @@ void setup() {
 void draw() {
   background(0, 0, 25, 100);
   frame+=1;
-/*
-  print("Stage: ");
-  println(stage);
-  print("Level: ");
-  println(level);
-  print("gameScreen Value: ");
-  println(gameScreen);
-  println("sneezieColor Value: " + sneezieColor);
-  println("Sneezies Size: "+sneezies.size());
-  println("TimePowerSize: "+timePower.size());
-  println("--------------------"); */
 
+
+  ///////////////////////////////////////
+  ///////////START SCREEN///////////////
+  /////////////////////////////////////
   if (startScreen) {
     for (int i=0; i<350; i++) {
       introBubbles.add(new title());
@@ -62,12 +56,27 @@ void draw() {
   }
   
   if (keyPressed && key==TAB) {
-    
+    startScreen = false;
+    instructionScreen=true;
   }
   
   if (keyPressed && key==' ') {
+    startScreen = false;
     gameScreen = true;
-  } 
+  }
+  
+  
+  ///////////////////////////////////////
+  ////////INSTRUCTION SCREEN////////////
+  /////////////////////////////////////
+  if (instructionScreen) {
+    instr.show();
+  }
+  
+  
+  /////////////////////////////////////
+  //////////***GAME***////////////////
+  ///////////////////////////////////
 
   if (gameScreen) {
 
@@ -77,13 +86,16 @@ void draw() {
         loading=false;
       }
     }
-    //////////////////////////////////////
+
+
+    /////////////DEBRIS////////////////
+    
     if (esplosions.size() < maxBalls) {
       if (mousePressed) {
         esplosions.add(new  ball());
       }
     }
-    //////////////////////////////////////
+    
     if (burst) {
       for (int k=0; k<5; k++) {
         for (int i=0; i<50; i++) {
@@ -92,8 +104,6 @@ void draw() {
       }
       burst=false;
     }
-
-    /////////////DEBRIS////////////////
     for (int i=0; i<esplosions.size (); i++) {
       ball debris = esplosions.get(i);
       debris.display();
@@ -106,7 +116,7 @@ void draw() {
       }
     }
 
-    /////////////SNEEZIES//////////////
+    ///////////SNEEZIES//////////////
     sneezieColor+=sneezieColorC;
     if (sneezieColor>=level*60 || sneezieColor<=(level-1)*60) {
       sneezieColorC*=-1;
@@ -155,20 +165,10 @@ void draw() {
               timePower.remove(i);
               time+=5;
               plusTime=true;
-             // println("working");
             }
           }
         }
       }
-    }
-    for (int i=0; i<301; i++) {                //WIP
-      if (plusTime) {
-        displaytime=true;
-      }
-      plusTime=false;
-    }
-    if (displaytime) {
-      text("+5s", mouseX, mouseY);
     }
 
 
@@ -204,7 +204,7 @@ void draw() {
     }
 
 
-    //////////////INFORMATION TEXT////////////////////////
+    ///////////INFO TEXT////////////
     fill(#E71AE8);
     textSize(12);
     text("#PinkprintOniTunes", width-75, height-20);
@@ -233,18 +233,19 @@ void draw() {
     }
     text(timeComment, 25, 60);
     textAlign(CENTER);
-
-    if (sneezies.size()==0 && timePower.size()==0 && burstPower.size()==0 || time<=0) {
+    
+      if (sneezies.size()==0 && timePower.size()==0 && burstPower.size()==0 || time<=0) {
       gameScreen=false;
     }
-  }//end of stage 1(gameScreen==true)
+
+  }
 
   if(gameScreen==false && time<0) {
     loseScreen=true;
   }
   
+  ////////GAME OVER SCREEN/////////
   if(loseScreen) {
-    /////LOSE SCREEN////
     if (sneezies.size()>0 || timePower.size()>0 || burstPower.size()>0) {
       background(0);
       fill(#120DBC);
@@ -253,12 +254,12 @@ void draw() {
     }
   }
   
-  if(gameScreen==false && time>0 && (sneezies.size() >0 || timePower.size()>0 || burstPower.size()>0)) {
+  if(gameScreen==false && (sneezies.size() ==0 && timePower.size()==0 && burstPower.size()==0) && startScreen == false && instructionScreen==false) {
     winScreen=true;
   }
 
+   ///////WIN SCREEN////////
   if(winScreen==true) {
-      /////WIN SCREEN///////
       background(0);
       if (winningBubbles.size()<maxBubbles) {
         for (int i=0; i<100; i++) {
@@ -278,12 +279,7 @@ void draw() {
       text("YOU WON!!!", width/2, height/2);
       textSize(25);
       text("Press Enter to Advance", width/2, 2*height/3);
-    }
-  //end of stage 2(gameScreen==false)
-}//end of main code
-
-void keyReleased() {
-  if (gameScreen==false && sneezies.size() <= 0 && timePower.size()<=0 && burstPower.size()<=0) {
+       
     for (int i=0; i<sneezies.size (); i++) {
       sneezies.remove(i);
     }
@@ -296,7 +292,8 @@ void keyReleased() {
     for (int i=0; i<esplosions.size (); i++) {
       esplosions.remove(i);
     }
-    if (key==ENTER) {
+    if (keyPressed && key==ENTER) {
+      winScreen = false;
       time=10;
       frame=0;
       sneezieColor=level*60;
@@ -308,7 +305,6 @@ void keyReleased() {
       burstPowerOn=false;
       burstPowerOff=false;
       loading=true;
-      //stage=1;
       level+=1;
       maxSneezie+=5;
       gameScreen=true;
@@ -316,14 +312,11 @@ void keyReleased() {
         winningBubbles.remove(i);
       }
     }
-  }
+  
+    }
 
-
-
-
-  ///////DEVELOPER CHEATS//////// 
-  else {
-    if (key > '0' && key < '7') {
+  /////////CHEATS//////// 
+    if (keyPressed && gameScreen && key > '0' && key < '7') {
       for(int i=0; i<sneezies.size (); i++) {
         sneezies.remove(i);
       }
@@ -356,6 +349,5 @@ void keyReleased() {
         level=7;
       }
     }
-  }
-}
+  } //end of code tbh
 

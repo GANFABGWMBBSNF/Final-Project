@@ -36,26 +36,6 @@ class ball {
     acc.setMag(.03);
   }
 
-  void bounce() {
-    //bouce off of floor
-    if (loc.y+sz/2>height) {
-      loc.y = height-sz/2;
-      vel.y=-abs(vel.y);
-    }
-    //bounce ceiling
-    if (loc.y-sz/2<0) {
-      vel.y=abs(vel.y);
-    }
-    //bounce right wall
-    if (loc.x+sz/2>width) {
-      vel.x=-abs(vel.x);
-    }
-    //bounce left wall
-    if (loc.x-sz/2<0) {
-      vel.x=abs(vel.x);
-    }
-  }
-
   void age() {
     life-=.8333;
   }
