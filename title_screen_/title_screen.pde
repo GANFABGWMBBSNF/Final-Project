@@ -25,13 +25,18 @@ class title {
     fill(0, 0, 25, 100);
     rect(0, 0, width, 200);
     rect(0, 400, width, height);
+    
+    textFont(titleFontXL);
     fill(0, 0, 25, 100);
-    textSize(190);
+    textSize(175);
     text("SNEEZIES", width/2, 375);
-    noStroke();
+    
+    textFont(titleFont);
     fill(frameCount%360, 100, 100, 40);
+    textSize(30);
+    text("PRESS TAB FOR INSTRUCTIONS OR", width/2, 490);
     textSize(50);
-    text("GOTTA CLICK EM ALL!", width/2, 500);
+    text("PRESS SPACE TO BEGIN", width/2, 530);
   }
 
   void bounce() {

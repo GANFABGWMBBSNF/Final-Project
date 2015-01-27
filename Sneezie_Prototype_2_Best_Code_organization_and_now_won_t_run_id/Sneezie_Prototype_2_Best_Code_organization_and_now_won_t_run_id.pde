@@ -3,21 +3,28 @@ ArrayList<sneezie> sneezies = new ArrayList<sneezie>();
 ArrayList<timeSneezie> timePower = new ArrayList<timeSneezie>();
 ArrayList<burstSneezie> burstPower = new ArrayList<burstSneezie>();
 ArrayList<bubbles> winningBubbles= new ArrayList<bubbles>();
+ArrayList<title> introBubbles = new ArrayList<title>();
+title titleText = new title();
+
+boolean firstClick=true;
+boolean loading=true, burst;
+boolean startScreen=true, instructionScreen=false, gameScreen=false;
+boolean winScreen=false, loseScreen=false;
+boolean timePowerOn=false, timePowerOff=false;
+boolean burstPowerOn=false, burstPowerOff=false;
+boolean plusTime=false, displaytime;
+boolean levelChanged=false;
 
 float time=10, timeFinal=0;
 float sneezieColor, sneezieColorC=0.5;
 float timePowerChance=random(100), burstPowerChance=random(100);
-
-int maxBalls=50, maxSneezie, maxBubbles=5;
+float maxBalls=50, maxSneezie=20, maxBubbles=5;
 int level=1, levelTextColor=0, stage=1, frame=0;
 
-boolean firstClick=true;
-boolean loading=true, burst;
-boolean startScreen=false, gameScreen=true, instructionScreen=false;
-boolean timePowerOn=false, timePowerOff=false;
-boolean burstPowerOn=false, burstPowerOff=false;
-boolean plusTime=false, displaytime;
+PFont titleFont;
+PFont titleFontXL;
 
+PVector mouse=new PVector(mouseX, mouseY);
 String timeComment;
 
 void setup() {
@@ -25,12 +32,14 @@ void setup() {
   colorMode(HSB, 360, 100, 100, 100);
   background(0, 0, 25, 100);
   textAlign(CENTER);
+  titleFont = loadFont("ComicNeueAngular-Light-48.vlw");
+  titleFontXL = loadFont("ComicNeueAngular-Light-175.vlw");
 }
 
 void draw() {
   background(0, 0, 25, 100);
-  PVector mouse=new PVector(mouseX, mouseY);
   frame+=1;
+/*
   print("Stage: ");
   println(stage);
   print("Level: ");
@@ -40,40 +49,27 @@ void draw() {
   println("sneezieColor Value: " + sneezieColor);
   println("Sneezies Size: "+sneezies.size());
   println("TimePowerSize: "+timePower.size());
-  //println("testtime location: " + testtime.loc);
-  println("--------------------");
+  println("--------------------"); */
+
+  if (startScreen) {
+    for (int i=0; i<350; i++) {
+      introBubbles.add(new title());
+      title boop = introBubbles.get(i);
+      boop.showBalls();
+      boop.bounce();
+    }
+    titleText.showText();
+  }
+  
+  if (keyPressed && key==TAB) {
+    
+  }
+  
+  if (keyPressed && key==' ') {
+    gameScreen = true;
+  } 
 
   if (gameScreen) {
-
-    if (level==1) {
-      maxBalls=100;
-      maxSneezie=15;
-    }//end of lvl 1
-
-    if (level==2) {
-      maxBalls=100;
-      //    maxSneezie=20;
-    }//end of lvl 2
-
-    if (level==3) {
-      maxBalls=100;
-      //      maxSneezie=20;
-    }//end of lvl 3
-
-    if (level==4) {
-      maxBalls=100;
-      //      maxSneezie=20;
-    }//end of lvl 4
-
-    if (level==5) {
-      maxBalls=100;
-      //      maxSneezie=20;
-    }//end of lvl 5
-
-    if (level==6) {
-      maxBalls=100;
-      //      maxSneezie=20;
-    }//end of lvl 6
 
     if (loading) {
       for (int i=0; i<maxSneezie; i++) {
@@ -96,7 +92,8 @@ void draw() {
       }
       burst=false;
     }
-    //////////////////////////////////////
+
+    /////////////DEBRIS////////////////
     for (int i=0; i<esplosions.size (); i++) {
       ball debris = esplosions.get(i);
       debris.display();
@@ -108,6 +105,8 @@ void draw() {
         esplosions.remove(i);
       }
     }
+
+    /////////////SNEEZIES//////////////
     sneezieColor+=sneezieColorC;
     if (sneezieColor>=level*60 || sneezieColor<=(level-1)*60) {
       sneezieColorC*=-1;
@@ -129,7 +128,8 @@ void draw() {
         }
       }
     }
-    /////////time power up/////////
+
+    ///////EXTRA TIME POWER UP/////////
     if (timePowerOff!=true) {
       if (timePowerChance<25) {
         timePowerOn=true;
@@ -155,7 +155,7 @@ void draw() {
               timePower.remove(i);
               time+=5;
               plusTime=true;
-              println("working");
+             // println("working");
             }
           }
         }
@@ -170,9 +170,9 @@ void draw() {
     if (displaytime) {
       text("+5s", mouseX, mouseY);
     }
-    
-    
-    /////////burst power up/////////
+
+
+    /////////BURST POWER UP/////////
     if (burstPowerOff!=true) {
       if (burstPowerChance<25) {
         burstPowerOn=true;
@@ -202,7 +202,9 @@ void draw() {
         }
       }
     }
-    //////////////////////////////////////
+
+
+    //////////////INFORMATION TEXT////////////////////////
     fill(#E71AE8);
     textSize(12);
     text("#PinkprintOniTunes", width-75, height-20);
@@ -237,15 +239,27 @@ void draw() {
     }
   }//end of stage 1(gameScreen==true)
 
-  else {
+  if(gameScreen==false && time<0) {
+    loseScreen=true;
+  }
+  
+  if(loseScreen) {
+    /////LOSE SCREEN////
     if (sneezies.size()>0 || timePower.size()>0 || burstPower.size()>0) {
       background(0);
       fill(#120DBC);
       textSize(50);
       text("GAME OVER", width/2, height/2);
-    } else {
+    }
+  }
+  
+  if(gameScreen==false && time>0 && (sneezies.size() >0 || timePower.size()>0 || burstPower.size()>0)) {
+    winScreen=true;
+  }
+
+  if(winScreen==true) {
+      /////WIN SCREEN///////
       background(0);
-      /////bubblies/////
       if (winningBubbles.size()<maxBubbles) {
         for (int i=0; i<100; i++) {
           winningBubbles.add(new bubbles());
@@ -259,14 +273,13 @@ void draw() {
           winningBubbles.remove(i);
         }
       }
-      /////text-to-advance/////
       fill(#120DBC);
       textSize(50);
       text("YOU WON!!!", width/2, height/2);
       textSize(25);
       text("Press Enter to Advance", width/2, 2*height/3);
     }
-  }//end of stage 2(gameScreen==false)
+  //end of stage 2(gameScreen==false)
 }//end of main code
 
 void keyReleased() {
@@ -311,77 +324,36 @@ void keyReleased() {
   ///////DEVELOPER CHEATS//////// 
   else {
     if (key > '0' && key < '7') {
-      for (int i=0; i<sneezies.size (); i++) {
+      for(int i=0; i<sneezies.size (); i++) {
         sneezies.remove(i);
       }
+      time=10;
+      frame=0;
+      sneezieColor=level*60;
+      sneezieColorC=abs(sneezieColorC);
+      loading=true;
+      gameScreen=true;
+      
       if (key=='1') {
-        time=10;
-        frame=0;
-        sneezieColor=level*60;
-        sneezieColorC=abs(sneezieColorC);
-        loading=true;
-        //stage=1;
         level=1;
-        gameScreen=true;
       }
       if (key=='2') {
-        time=10;
-        frame=0;
-        sneezieColor=level*60;
-        sneezieColorC=abs(sneezieColorC);
-        loading=true;
-        //stage=1;
         level=2;
-        gameScreen=true;
       }
       if (key=='3') {
-        time=10;
-        frame=0;
-        sneezieColor=level*60;
-        sneezieColorC=abs(sneezieColorC);
-        loading=true;
-        //stage=1;
         level=3;
-        gameScreen=true;
       }
       if (key=='4') {
-        time=10;
-        frame=0;
-        sneezieColor=level*60;
-        sneezieColorC=abs(sneezieColorC);
-        loading=true;
-        //stage=1;
         level=4;
-        gameScreen=true;
       }
       if (key=='5') {
-        time=10;
-        frame=0;
-        sneezieColor=level*60;
-        sneezieColorC=abs(sneezieColorC);
-        loading=true;
-        //stage=1;
         level=5;
-        gameScreen=true;
       }
       if (key=='6') {
-        time=10;
-        frame=0;
-        sneezieColor=level*60;
-        sneezieColorC=abs(sneezieColorC);
-        loading=true;
-        //stage=1;
         level=6;
-        gameScreen=true;
       }
-      if (key==' ') {
-        time=10;
-        frame=0;
-        sneezieColor=level*60;
-        sneezieColorC=abs(sneezieColorC);
-        loading=true;
-        //stage=1;
-        gameScreen=true;
+      if (key=='7') {
+        level=7;
       }
     }
   }
